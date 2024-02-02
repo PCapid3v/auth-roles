@@ -7,14 +7,14 @@ async function seed() {
   const users = []
 
   while (users.length < 10) {
-    const user = await createUser(faker.internet.userName(), '123456789')
+    const user = await createUser(faker.internet.userName(), '123456789',role = 'USER')
     users.push(user)
   }
 
   process.exit(0)
 }
 
-async function createUser(username, password) {
+async function createUser(username, password, role = 'USER') {
   const posts = []
 
   for (let i = 0; i < username.length; i++) {
@@ -25,6 +25,7 @@ async function createUser(username, password) {
     data: {
       username,
       passwordHash: await bcrypt.hash(password, 6),
+      role,
       posts: {
         create: posts
       }
